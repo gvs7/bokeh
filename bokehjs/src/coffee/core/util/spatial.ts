@@ -1,5 +1,5 @@
 /// <reference types="@types/rbush" />
-import * as rbush from "rbush"
+import * as flatbush from "flatbush"
 
 export type Rect = {minX: number, minY: number, maxX: number, maxY: number}
 
@@ -7,31 +7,39 @@ export abstract class SpatialIndex {
   abstract indices(rect: Rect): number[]
 }
 
-export class RBush extends SpatialIndex {
-  private readonly index: rbush.RBush<Rect & {i: number}>
+export class FlatBush extends SpatialIndex {
+  private readonly index: any
 
   constructor(points: (Rect & {i: number})[]) {
     super()
-    this.index = rbush<Rect & {i: number}>()
-    this.index.load(points)
+    this.index = flatbush(points.length);
+
+    for (const p of points) {
+      this.index.add(p.minX, p.minY, p.maxX, p.maxY);
+    }
+    this.index.finish();
   }
 
   get bbox(): Rect {
-    const {minX, minY, maxX, maxY} = this.index.toJSON()
-    return {minX, minY, maxX, maxY}
+    return {
+      minX: this.index._minX,
+      minY: this.index._minY,
+      maxX: this.index._maxX,
+      maxY: this.index._maxY
+    }
   }
 
   search(rect: Rect): (Rect & {i: number})[] {
-    return this.index.search(rect)
+    const indices = this.indices(rect);
+    const rects = new Array<(Rect & {i: number})>();
+    for (const i of indices) {
+      const data = this.index.data.slice(i*5, i*5+5);
+      rects.push({minX: data[1], minY: data[2], maxX: data[3], maxY: data[4], i});
+    }
+    return rects;
   }
 
   indices(rect: Rect): number[] {
-    const points = this.search(rect)
-    const n = points.length
-    const indices = new Array<number>(n)
-    for (let j = 0; j < n; j++) {
-      indices[j] = points[j].i
-    }
-    return indices
+    return this.index.search(rect.minX, rect.minY, rect.maxX, rect.maxY);
   }
 }

@@ -1,6 +1,6 @@
 /* XXX: partial */
 import {LineMixinVector, FillMixinVector} from "core/property_mixins"
-import {RBush} from "core/util/spatial";
+import {FlatBush} from "core/util/spatial";
 import {Context2d} from "core/util/canvas"
 import {Glyph, GlyphView} from "./glyph";
 import {PointGeometry, SpanGeometry, RectGeometry} from "core/geometry";
@@ -12,7 +12,7 @@ import {Selection} from "../selections/selection";
 export abstract class BoxView extends GlyphView {
   model: Box
 
-  _index_box(len): RBush {
+  _index_box(len): FlatBush {
     const points = [];
 
     for (let i = 0, end = len; i < end; i++) {
@@ -23,7 +23,7 @@ export abstract class BoxView extends GlyphView {
       points.push({minX: l, minY: b, maxX: r, maxY: t, i});
     }
 
-    return new RBush(points);
+    return new FlatBush(points);
   }
 
   _render(ctx: Context2d, indices, {sleft, sright, stop, sbottom}) {

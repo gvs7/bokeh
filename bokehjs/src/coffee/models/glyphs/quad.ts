@@ -2,7 +2,7 @@
 import {Box, BoxView} from "./box"
 import {NumberSpec} from "core/vectorization"
 import {Anchor} from "core/enums"
-import {RBush} from "core/util/spatial"
+import {FlatBush} from "core/util/spatial"
 
 export class QuadView extends BoxView {
   model: Quad
@@ -35,7 +35,7 @@ export class QuadView extends BoxView {
     return (this.stop[i] + this.sbottom[i])/2;
   }
 
-  _index_data(): RBush {
+  _index_data(): FlatBush {
     return this._index_box(this._right.length);
   }
 

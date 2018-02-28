@@ -2,14 +2,14 @@
 import {Box, BoxView} from "./box";
 import {NumberSpec, DistanceSpec} from "core/vectorization"
 import * as p from "core/properties"
-import {RBush} from "core/util/spatial"
+import {FlatBush} from "core/util/spatial"
 
 export class VBarView extends BoxView {
   model: VBar
 
   scy(i) { return (this.stop[i] + this.sbottom[i])/2; }
 
-  _index_data(): RBush {
+  _index_data(): FlatBush {
     return this._index_box(this._x.length);
   }
 

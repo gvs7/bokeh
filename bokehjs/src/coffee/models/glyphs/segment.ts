@@ -3,7 +3,7 @@ import {PointGeometry, SpanGeometry} from "core/geometry";
 import * as hittest from "core/hittest";
 import {NumberSpec} from "core/vectorization"
 import {LineMixinVector} from "core/property_mixins"
-import {RBush} from "core/util/spatial";
+import {FlatBush} from "core/util/spatial";
 import {Context2d} from "core/util/canvas"
 import {Glyph, GlyphView} from "./glyph"
 import {Selection} from "../selections/selection";
@@ -25,7 +25,7 @@ export class SegmentView extends GlyphView {
       }
     }
 
-    return new RBush(points);
+    return new FlatBush(points);
   }
 
   _render(ctx: Context2d, indices, {sx0, sy0, sx1, sy1}) {

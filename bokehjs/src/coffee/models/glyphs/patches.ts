@@ -1,5 +1,5 @@
 /* XXX: partial */
-import {RBush} from "core/util/spatial";
+import {FlatBush} from "core/util/spatial";
 import {Glyph, GlyphView} from "./glyph";
 import {min, max, copy, findLastIndex} from "core/util/array";
 import {isStrictNaN} from "core/util/types";
@@ -76,7 +76,7 @@ export class PatchesView extends GlyphView {
       }
     }
 
-    return new RBush(points);
+    return new FlatBush(points);
   }
 
   _mask_data(_all_indices) {

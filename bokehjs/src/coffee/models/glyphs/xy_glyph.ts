@@ -1,6 +1,6 @@
 /* XXX: partial */
 import {NumberSpec} from "core/vectorization"
-import {RBush} from "core/util/spatial";
+import {FlatBush} from "core/util/spatial";
 import {Glyph, GlyphView} from "./glyph";
 
 export abstract class XYGlyphView extends GlyphView {
@@ -18,7 +18,7 @@ export abstract class XYGlyphView extends GlyphView {
       points.push({minX: x, minY: y, maxX: x, maxY: y, i});
     }
 
-    return new RBush(points);
+    return new FlatBush(points);
   }
 }
 
