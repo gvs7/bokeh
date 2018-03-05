@@ -1,5 +1,5 @@
 /* XXX: partial */
-import {FlatBush} from "core/util/spatial";
+import {SpatialIndex} from "core/util/spatial";
 import {PointGeometry, SpanGeometry} from "core/geometry"
 import {NumberSpec} from "core/vectorization"
 import {LineMixinVector} from "core/property_mixins"
@@ -46,7 +46,7 @@ export class MultiLineView extends GlyphView {
       });
     }
 
-    return new FlatBush(points);
+    return new SpatialIndex(points);
   }
 
   _render(ctx: Context2d, indices, {sxs, sys}) {

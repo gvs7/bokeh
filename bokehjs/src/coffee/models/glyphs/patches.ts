@@ -1,5 +1,5 @@
 /* XXX: partial */
-import {FlatBush} from "core/util/spatial";
+import {SpatialIndex} from "core/util/spatial";
 import {Glyph, GlyphView} from "./glyph";
 import {min, max, copy, findLastIndex} from "core/util/array";
 import {isStrictNaN} from "core/util/types";
@@ -76,7 +76,7 @@ export class PatchesView extends GlyphView {
       }
     }
 
-    return new FlatBush(points);
+    return new SpatialIndex(points);
   }
 
   _mask_data(_all_indices) {
